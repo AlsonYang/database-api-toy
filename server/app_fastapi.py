@@ -1,12 +1,12 @@
+#!/usr/bin/env python3
 '''
 A fastapi application to serve API endpoints to interact with the local database using self-built `DatabaseEditor`
 '''
 from typing import Union
 import json
-from fastapi import FastAPI
+from fastapi import FastAPI, Path
 from pydantic import BaseModel
 from database.local_database import DatabaseEditor, Response
-
 
 app = FastAPI()
 
@@ -26,13 +26,6 @@ def standardise_db_response(response:Response):
         'msg': msg
     }
 
-def read_request_json(json_data):
-    '''.'''
-    if isinstance(json_data,str):
-        json_data = json.loads(json_data)
-    return {'name': json_data.get('name'), 'description': json_data.get('description')}
-
-
 @app.get("/")
 def welcome():
     '''.'''
@@ -48,9 +41,9 @@ def get_members(ascending: bool=True):
 
 # GET with path-params using special endpoint - for retriving special data item
 @app.get("/members/{id}")
-def get_member(id):
+def get_member(id: int = Path(None, describe="The ID of the member you'd like to get", gt=0, lt=9999)): # The Path is used to specify description and value constraints for the path parameter.
     '''.'''
-    response = DatabaseEditor.get(int(id))
+    response = DatabaseEditor.get(id)
     return standardise_db_response(response)
     
 # POST with data using request-data-model `MemberData` and with query-param
@@ -67,16 +60,16 @@ def add_member(member_data: MemberData, capitalize_name:bool =True):
 
 # PUT with data using request-data-model `MemberData` and with query-param
 @app.put("/members/{id}")
-def edit_member(id: str, member_data: MemberData):
+def edit_member(id: int, member_data: MemberData):
     '''.'''
-    response = DatabaseEditor.put(int(id), name=member_data.name, description=member_data.description)
+    response = DatabaseEditor.put(id, name=member_data.name, description=member_data.description)
     return standardise_db_response(response)
 
 # DELETE using path-param
 @app.delete("/members/{id}")
-def delete_member(id: str):
+def delete_member(id: int):
     '''.'''
-    response = DatabaseEditor.delete(int(id))
+    response = DatabaseEditor.delete(id)
     return standardise_db_response(response)
 
 def run_app(): #

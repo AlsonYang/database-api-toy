@@ -5,10 +5,21 @@ For new learner who wants to explore web framework (`FastAPI` and `Flask`) for d
 TLDR: mimic the real life application where web server hosting different APIs Endpoints for the clients to submit CRUD request to interact with database. 
 1. Server side
     - Created a database class `DatabaseEditor` that can create a mock up local database and provides CRUD functionalities.
+        - (Design principle) All the business logic goes in here
     - Use `Flask` and `FastAPI` to create RestFul API that talks to the database via `DatabaseEditor` class. Both frameworks provide the same entrypoints and functionalities.
+        - (Desig prinicple) Only make sure the requests data are the right type, and formatting return response to be jsonifiable.
 3. Client side
     - Create bash scripts that can be run to submit pre-defined API requests 
     - Create python CLI script to submit customisable API requests
+
+### API funtionality covered
+- request type: `POST`, `GET`, `PUT`, `DELETE`
+- request info: `Path Param`, `Query Param`, `Request Body` (json data)
+
+## Notes
+### FastAPI
+    - by default, if the parameter in the function is not specified in the endpoint path as path param, then it is a query parameter
+
 
 # My finding of `FastAPI` vs `Flask`
 ### `FastAPI` better than `Flask`
@@ -16,8 +27,8 @@ TLDR: mimic the real life application where web server hosting different APIs En
     - for FastAPI, simply add them as function arguments
     - for Flask, need to get them from request
 - Auto-reinforce request data type with type hint. ref: fn`@post add number`
-    - For FastAPI, the type hint in the function arguments tells FastAPI to auto-convert the request's data into the right typing
-    - For Flask, I will need to create a function `parse_bool_argument` to reinforce the type of argument
+    - For FastAPI, the type hint in the function arguments tells FastAPI to auto-convert the request's data into the right typing. If it cannot convert into the right type, it will raise error back to client side to ask for the right data type -> No need to do data validation on API side
+    - For Flask, I will need to create a function `parse_bool_argument` to reinforce the type of argument, or do tons of data validation after receiving the request data
 ### `Flask` better than `FastAPI`
 - haven't noticed any yet
 
@@ -50,8 +61,12 @@ TLDR: mimic the real life application where web server hosting different APIs En
 
     `python server/db_init_cli.py`
 3.  spin up the server: 
-
-    `python server/app_fastapi.py` or `python server/app_flask.py`
+    - fastapi
+        - `python server/app_fastapi.py` 
+        - `cd server && uvicorn app_fastapi:app --reload`
+    - flask
+        - `python server/app_flask.py`
+        - `cd server && export FLASK_APP=app_flask.py && flask run --reload`
 
 4.  use any of the client to send API request: see below Client side sections various methods.
 
@@ -106,6 +121,11 @@ usage: `bash client/<bashfile>`
 - http://localhost:8080/members?ascending=True
 - http://localhost:8080/members/<id>
 
+### 5. built-in docs for `FastAPI`
+- (Interactive request UI) http://0.0.0.0:8080/docs
+- (Documentation) http://0.0.0.0:8080/redoc
+
+
 # Trouble shooting
 ### find out which PID is using port 8080
 `lsof -i tcp:8080`
@@ -113,4 +133,10 @@ usage: `bash client/<bashfile>`
 `htop` -> `F9` -> `9` -> `Enter`
 or
 `kill -9 50954`
+
+
+# reference
+- Repo functionalities (server + client): https://github.com/AlsonYang/Python-MLOps-Cookbook - Noah Gift (Good to get ideas of what functionalities/tools to learn and code out)
+- How to use Flask (API concept + Flask code): https://www.youtube.com/watch?v=qbLc5a9jdXo - Caleb Curry (very beginer friendly)
+- How to use FastAPI (API concept + FastAPI code) https://www.youtube.com/watch?v=-ykeT6kk4bk&t=2394s - Tech with Team (A little advanced and  random errors and debug, good to watch once have written own FastAPI to know a few extra useful stuffs and watch the debug and thinking process)
 

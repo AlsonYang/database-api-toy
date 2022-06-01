@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from enum import Enum
 import pandas as pd
 
-class ResponseCode(Enum):
+class StatusCode(Enum):
     '''.'''
     info = 100
     success = 200
@@ -21,7 +21,7 @@ class ResponseCode(Enum):
 @dataclass
 class Response:
     '''.'''
-    code: ResponseCode
+    code: StatusCode
     msg:str = None
     data:dict = None
 
@@ -38,7 +38,7 @@ class DatabaseEditor:
         
         df = pd.DataFrame(columns=['id', 'name','description'])
         df.to_pickle(cls.db_file)
-        return Response(msg=f'{cls.db_file} is initalised', code=ResponseCode.success)
+        return Response(msg=f'{cls.db_file} is initalised', code=StatusCode.success)
 
     @classmethod
     def get_all(cls, ascending: bool=True):
@@ -46,9 +46,9 @@ class DatabaseEditor:
         try:
             df = pd.read_pickle(cls.db_file)
             df.sort_values(by='id', ascending=ascending, inplace=True)
-            return Response(data=df.to_dict('records'), code=ResponseCode.success)
+            return Response(data=df.to_dict('records'), code=StatusCode.success)
         except Exception as e:
-            return Response(msg=e, code=ResponseCode.client_error)
+            return Response(msg=e, code=StatusCode.client_error)
     
     @classmethod
     def get(cls, id: int):
@@ -56,9 +56,9 @@ class DatabaseEditor:
         df = pd.read_pickle(cls.db_file)
         df = df.loc[df['id'] == id]
         if len(df) == 1:
-            return Response(data=df.to_dict('records'),code=ResponseCode.success)
+            return Response(data=df.to_dict('records'),code=StatusCode.success)
         elif len(df) == 0:
-            return Response(msg=f'no such member with id: `{id}`', code=ResponseCode.client_error)
+            return Response(msg=f'no such member with id: `{id}`', code=StatusCode.client_error)
         else:
             raise Exception(f'multile members with the same id {id} detected')
 
@@ -69,9 +69,9 @@ class DatabaseEditor:
             name = name.capitalize()
         df = pd.read_pickle(cls.db_file)
         if not name:
-            return Response(msg=f'name `{name}` is not a valid name', code=ResponseCode.client_error)
+            return Response(msg=f'name `{name}` is not a valid name', code=StatusCode.client_error)
         if name in df['name'].values:
-            return Response(msg=f'name `{name}` already exists in the database', code=ResponseCode.client_error)
+            return Response(msg=f'name `{name}` already exists in the database', code=StatusCode.client_error)
 
         if len(df) == 0:
             id = 1
@@ -81,34 +81,34 @@ class DatabaseEditor:
         new_row = pd.DataFrame.from_dict({k:[v] for k,v in new_data.items()})
         new_df = pd.concat([df, new_row], axis=0)
         new_df.to_pickle(cls.db_file)
-        return Response(msg=f'member `{new_data}` is added into database `{cls.db_file}`', code=ResponseCode.success)
+        return Response(msg=f'member `{new_data}` is added into database `{cls.db_file}`', code=StatusCode.success)
     
     @classmethod
     def put(cls, id:int, name:str=None, description:str=None):
         '''.'''
         if name is None and description is None:
-            return Response(msg='Nothing updated, nor name or description is provided', code=ResponseCode.client_error)
+            return Response(msg='Nothing updated, nor name or description is provided', code=StatusCode.client_error)
         df = pd.read_pickle(cls.db_file)
         if id not in df['id'].values:
-            return Response(msg=f'no such member with id: `{id}`', code=ResponseCode.client_error)
+            return Response(msg=f'no such member with id: `{id}`', code=StatusCode.client_error)
         if name is not None:
             df.loc[df['id']==id, 'name'] = name
         if description is not None:
             df.loc[df['id']==id, 'description'] = description
         df.to_pickle(cls.db_file)
         member_data = cls.get(id).data
-        return Response(msg=f'`{member_data}` is updated in `{cls.db_file}`', code=ResponseCode.client_error)
+        return Response(msg=f'`{member_data}` is updated in `{cls.db_file}`', code=StatusCode.client_error)
 
     @classmethod
     def delete(cls, id):
         '''.'''
         df = pd.read_pickle(cls.db_file)
         if id not in df['id'].values:
-            return Response(msg=f'no such member with id: `{id}`', code=ResponseCode.client_error)
+            return Response(msg=f'no such member with id: `{id}`', code=StatusCode.client_error)
         member_data = cls.get(id).data
         df = df.loc[df['id']!=id]
         df.to_pickle(cls.db_file)
-        return Response(msg=f'`{member_data}` is removed from `{cls.db_file}`', code=ResponseCode.success)
+        return Response(msg=f'`{member_data}` is removed from `{cls.db_file}`', code=StatusCode.success)
 
 if __name__ == '__main__':
     print(DatabaseEditor._init())
