@@ -16,12 +16,20 @@ TLDR: mimic the real life application where web server hosting different APIs En
 - request type: `POST`, `GET`, `PUT`, `DELETE`
 - request info: `Path Param`, `Query Param`, `Request Body` (json data)
 
-## Notes
+# Notes
 ### FastAPI
-    - by default, if the parameter in the function is not specified in the endpoint path as path param, then it is a query parameter
+- by default, if the parameter in the function is not specified in the endpoint path as path param, then it is a query parameter
+- `uvicorn`: FastAPI is a framework to build API, but to host API, we need an API server, and it recommends to use `uvicorn` or `Hypercorn`
+- `Pydantic`: FastAPI recommends specifying the 'request body' with Pydantic's `BaseModel` to control data typing for request data. It does automatic data validation for you under the hood.
+
+## TODO
+- serve this repo on AWS cloud runner and test it with `Postman`
+
+## What can be improved for this repo
+- on API application, when client_error is met, it's better to raise `HTTPException(status_code=..., detail=...)` for error instead of return the reponse directly from database
 
 
-# My finding of `FastAPI` vs `Flask`
+## My finding of `FastAPI` vs `Flask`
 ### `FastAPI` better than `Flask`
 - Easier to get query-param and json-data in the API function. ref: fn `@post add_member`
     - for FastAPI, simply add them as function arguments
@@ -53,7 +61,7 @@ TLDR: mimic the real life application where web server hosting different APIs En
     └── db_init_cli.py
 ```
 # Quickstart
-## directly run scripts steps
+## Directly run scripts steps
 1. install dependency 
 
     `pip install -r requirements.txt`
@@ -70,7 +78,7 @@ TLDR: mimic the real life application where web server hosting different APIs En
 
 4.  use any of the client to send API request: see below Client side sections various methods.
 
-## use make file steps
+## Use Makefile steps
 1. install dependency, init database, spinup server
 
     `make all_fastapi` or `make all_flask`
@@ -78,7 +86,7 @@ TLDR: mimic the real life application where web server hosting different APIs En
     
     `make curl_request`
 
-# main scripts
+# Main scripts/usages details
 ## Server side
 ### database
 local database class `server.database.local_database:DatabaseEditor`
@@ -135,8 +143,10 @@ or
 `kill -9 50954`
 
 
-# reference
+# Reference
 - Repo functionalities (server + client): https://github.com/AlsonYang/Python-MLOps-Cookbook - Noah Gift (Good to get ideas of what functionalities/tools to learn and code out)
 - How to use Flask (API concept + Flask code): https://www.youtube.com/watch?v=qbLc5a9jdXo - Caleb Curry (very beginer friendly)
-- How to use FastAPI (API concept + FastAPI code) https://www.youtube.com/watch?v=-ykeT6kk4bk&t=2394s - Tech with Team (A little advanced and  random errors and debug, good to watch once have written own FastAPI to know a few extra useful stuffs and watch the debug and thinking process)
+- How to use FastAPI (API concept + FastAPI code) 
+    - https://www.youtube.com/watch?v=-ykeT6kk4bk&t=2394s - Tech with Team (A little advanced and  random errors and debug, good to watch once have written own FastAPI to know a few extra useful stuffs and watch the debug and thinking process)
+    - https://www.youtube.com/watch?v=GN6ICac3OXY - Amjgoscode (covers some other concepts like `uvicorn` and `pydantic`)
 
