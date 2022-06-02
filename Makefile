@@ -10,6 +10,7 @@ lint:
 
 test:
 	echo 'Echoing fake test done'
+	# python -m pytest -vv --cov=<fn name> <test script>.py
 
 init_db:
 	python server/db_init_cli.py --force True
