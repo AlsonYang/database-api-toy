@@ -2,14 +2,14 @@ install:
 	pip install --upgrade pip &&\
 		pip install -r requirements.txt
 
+format:
+	black server/*.py
+
 lint:
 	pylint --extension-pkg-whitelist='pydantic' --disable=R,C server/*.py
 
 test:
 	echo 'Echoing fake test done'
-
-format:
-	black *.py
 
 init_db:
 	python server/db_init_cli.py --force True
@@ -28,6 +28,6 @@ curl_request:
 	bash client/get_members.sh
 	bash client/delete_member.sh
 	bash client/get_members.sh 
-
+all_for_build: install format lint test 
 all_fastapi: install init_db host_fastapi
 all_flask: install init_db host_flask
