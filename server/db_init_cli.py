@@ -1,4 +1,3 @@
-from email import message
 import click
 from database.local_database import DatabaseEditor
 
@@ -8,8 +7,8 @@ from database.local_database import DatabaseEditor
     default=False
 )
 def db_init(force):
-    response = DatabaseEditor._init(force=force)
+    response = DatabaseEditor._init(force=force) # pylint: disable=protected-access
     click.echo(click.style(text=response))
 
 if __name__ == "__main__":
-    db_init()
+    db_init() # pylint: disable=no-value-for-parameter

@@ -2,6 +2,15 @@ install:
 	pip install --upgrade pip &&\
 		pip install -r requirements.txt
 
+lint:
+	pylint --extension-pkg-whitelist='pydantic' --disable=R,C server/*.py
+
+test:
+	echo 'Echoing fake test done'
+
+format:
+	black *.py
+
 init_db:
 	python server/db_init_cli.py --force True
 

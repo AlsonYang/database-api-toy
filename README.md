@@ -144,9 +144,9 @@ or
 
 
 # Reference
-- Repo functionalities (server + client): https://github.com/AlsonYang/Python-MLOps-Cookbook - Noah Gift (Good to get ideas of what functionalities/tools to learn and code out)
-- How to use Flask (API concept + Flask code): https://www.youtube.com/watch?v=qbLc5a9jdXo - Caleb Curry (very beginer friendly)
+- [Repo functionalities ideas (server + client)](https://github.com/AlsonYang/Python-MLOps-Cookbook) - Noah Gift: Good to get ideas of what functionalities/tools to learn and code out)
+- [How to use Flask (API concept + Flask code)](https://www.youtube.com/watch?v=qbLc5a9jdXo) - Caleb Curry: very beginer friendly
 - How to use FastAPI (API concept + FastAPI code) 
-    - https://www.youtube.com/watch?v=-ykeT6kk4bk&t=2394s - Tech with Team (A little advanced and  random errors and debug, good to watch once have written own FastAPI to know a few extra useful stuffs and watch the debug and thinking process)
-    - https://www.youtube.com/watch?v=GN6ICac3OXY - Amjgoscode (covers some other concepts like `uvicorn` and `pydantic`)
+    - [Tech with Team](https://www.youtube.com/watch?v=-ykeT6kk4bk&t=2394s): A little advanced and  random errors and debug, good to watch once have written own FastAPI to know a few extra useful stuffs and watch the debug and thinking process
+    - [Amjgoscode](https://www.youtube.com/watch?v=GN6ICac3OXY): covers some other concepts like `uvicorn` and `pydantic`
 

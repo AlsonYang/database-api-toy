@@ -2,8 +2,8 @@
 '''
 A fastapi application to serve API endpoints to interact with the local database using self-built `DatabaseEditor`
 '''
+#pylint: disable=redefined-builtin
 from typing import Union
-import json
 from fastapi import FastAPI, Path
 from pydantic import BaseModel
 from database.local_database import DatabaseEditor, Response
