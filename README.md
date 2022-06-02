@@ -1,4 +1,4 @@
-[![CI](https://github.com/AlsonYang/database-api-toy/actions/workflows/main.yml/badge.svg)](https://github.com/AlsonYang/database-api-toy/actions/workflows/main.yml)
+[![CI](https://github.com/AlsonYang/database-api-toy/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/AlsonYang/database-api-toy/actions/workflows/main.yml)
 
 # Purpose of this repo
 For new learner who wants to explore web framework (`FastAPI` and `Flask`) for developing RESTful APIs in python.
