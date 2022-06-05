@@ -1,4 +1,9 @@
 [![CI](https://github.com/AlsonYang/database-api-toy/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/AlsonYang/database-api-toy/actions/workflows/main.yml)
+# TODO
+- use GCP cloud shell to manually deploy this app into app engine. Then use cloud build to continously test and deploy this app to app engine with push 
+    - Ref Youtube: [Continuous Delivery of GCP Google App Engine](https://www.youtube.com/watch?v=2BJSUlaKMjQ)
+    - Ref Github: [noahgift/gcp-flask-ml-deploy](https://github.com/noahgift/gcp-flask-ml-deploy)
+- serve this repo on AWS cloud runner and test it with `Postman`
 
 # Purpose of this repo
 For new learner who wants to explore web framework (`FastAPI` and `Flask`) for developing RESTful APIs in python.
@@ -23,9 +28,6 @@ TLDR: mimic the real life application where web server hosting different APIs En
 - by default, if the parameter in the function is not specified in the endpoint path as path param, then it is a query parameter
 - `uvicorn`: FastAPI is a framework to build API, but to host API, we need an API server, and it recommends to use `uvicorn` or `Hypercorn`
 - `Pydantic`: FastAPI recommends specifying the 'request body' with Pydantic's `BaseModel` to control data typing for request data. It does automatic data validation for you under the hood.
-
-## TODO
-- serve this repo on AWS cloud runner and test it with `Postman`
 
 ## What can be improved for this repo
 - on API application, when client_error is met, it's better to raise `HTTPException(status_code=..., detail=...)` for error instead of return the reponse directly from database
