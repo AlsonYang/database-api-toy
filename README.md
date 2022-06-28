@@ -1,12 +1,23 @@
 [![CI](https://github.com/AlsonYang/database-api-toy/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/AlsonYang/database-api-toy/actions/workflows/main.yml)
+
 # TODO
 - use GCP cloud shell to manually deploy this app into app engine. Then use cloud build to continously test and deploy this app to app engine with push 
     - Ref Youtube: [Continuous Delivery of GCP Google App Engine](https://www.youtube.com/watch?v=2BJSUlaKMjQ)
     - Ref Github: [noahgift/gcp-flask-ml-deploy](https://github.com/noahgift/gcp-flask-ml-deploy)
 - serve this repo on AWS cloud runner and test it with `Postman`
+- unitest
 
 # Purpose of this repo
 For new learner who wants to explore web framework (`FastAPI` and `Flask`) for developing RESTful APIs in python.
+
+## Toolkits used
+- RestfulAPI
+    - FastAPI
+    - Flask
+- click
+- Makefile
+- Github Workflow
+- pytest & hypothesis (Not yet implemented)
 
 # What this repo do
 TLDR: mimic the real life application where web server hosting different APIs Endpoints for the clients to submit CRUD request to interact with database. 
